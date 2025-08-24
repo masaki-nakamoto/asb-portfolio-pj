@@ -5,6 +5,7 @@ services:
       dockerfile: Dockerfile
     working_dir: /app
     image: masakinakamoto/asb-app
+    platform: linux/amd64 #追加
     ports:
       - '80:8080' #追加
       - 8080:8080
