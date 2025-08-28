@@ -36,7 +36,14 @@ services:
       - '5432:5432'
     # 接続チェック、タイミングをズラす？
     healthcheck:
-      test: ['CMD', 'pg_isready', '-U', 'postgres']
+      test:
+        [
+          'CMD',
+          'sh',
+          '-c',
+          "pg_isready -U postgres && psql -U postgres -c 'SELECT 1'",
+        ]
       interval: 5s
       timeout: 5s
       retries: 5
+      start_period: 30s
