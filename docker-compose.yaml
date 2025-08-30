@@ -7,21 +7,9 @@ services:
     image: masakinakamoto/asb-app
     platform: linux/amd64 #追加
     ports:
-      - '80:8080' #追加
       - 8080:8080
       - 5050:5050
     tty: true
-    # アプリケーション起動時のDB接続
-    environment:
-      # DB環境変数 render
-      SPRING_DATASOURCE_URL: postgresql://asb_db_user:mRwFTNn1BcKY6yetP4AAM7OFE5HGhBjn@dpg-d2p4baf5r7bs739919jg-a/asb_db
-      SPRING_DATASOURCE_USERNAME: asb_db_user
-      SPRING_DATASOURCE_PASSWORD: mRwFTNn1BcKY6yetP4AAM7OFE5HGhBjn
-      # DB環境変数 ローカル
-      # SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/dev
-      # SPRING_DATASOURCE_USERNAME: postgres
-      # SPRING_DATASOURCE_PASSWORD: postgres
-    # app.jarを読み込むためvolumesで上書き止める
     # volumes:
     #   - ./:/app
     # ヘルスチェックがヘルスになってDB接続
@@ -41,13 +29,7 @@ services:
       - '5432:5432'
     # 接続チェック、タイミングをズラす？
     healthcheck:
-      test:
-        [
-          'CMD',
-          'sh',
-          '-c',
-          "pg_isready -U postgres && psql -U postgres -c 'SELECT 1'",
-        ]
+      test: ['CMD', 'sh', '-c', 'pg_isready -U postgres']
       interval: 5s
       timeout: 5s
       retries: 5
