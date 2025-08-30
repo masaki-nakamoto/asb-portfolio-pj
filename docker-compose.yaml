@@ -13,9 +13,11 @@ services:
     tty: true
     # アプリケーション起動時のDB接続
     environment:
+      # DB環境変数 render
       SPRING_DATASOURCE_URL: postgresql://asb_db_user:mRwFTNn1BcKY6yetP4AAM7OFE5HGhBjn@dpg-d2p4baf5r7bs739919jg-a/asb_db
       SPRING_DATASOURCE_USERNAME: asb_db_user
       SPRING_DATASOURCE_PASSWORD: mRwFTNn1BcKY6yetP4AAM7OFE5HGhBjn
+      # DB環境変数 ローカル
       # SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/dev
       # SPRING_DATASOURCE_USERNAME: postgres
       # SPRING_DATASOURCE_PASSWORD: postgres
