@@ -7,7 +7,6 @@
     <header th:replace="~{common/header}"></header>
 
     <div class="container">
-      <!-- <div th:if="${validationError}" th:each="error : ${validationError}"> -->
       </div>
       <h1 class="text-center custom-caption">新規登録</h1>
       <form
@@ -15,15 +14,15 @@
         th:object="${userAdd}"
         th:method="post">
         <div class="form-group custom-form-group">
-          <label class="custom-label">氏名<span class="text-danger custom-text-danger" th:if="${nameError}" th:each="error : ${nameError}" th:text="${error}"></span></label>
+          <label class="custom-label">氏名<span class="text-danger custom-text-danger" th:if="${submitted} and ${nameError}"  th:text="${nameError}"></span></label>
           <input type="text" name="name" th:field="*{name}" class="form-control custom-form" />
         </div>
         <div class="form-group custom-form-group">
-          <label class="custom-label">メールアドレス<span class="text-danger custom-text-danger" th:if="${emailError}" th:each="error : ${emailError}" th:text="${error}"></span></label>
+          <label class="custom-label">メールアドレス<span class="text-danger custom-text-danger" th:if="${submitted} and ${emailError}"    th:text="${emailError}"></span></label>
           <input type="text" name="email" th:field="*{email}" class="form-control custom-form" />
         </div>
         <div class="form-group custom-form-group">
-          <label class="custom-label">パスワード<span class="text-danger custom-text-danger" th:if="${passwordError}" th:each="error : ${passwordError}" th:text="${error}"></span></label>
+          <label class="custom-label">パスワード<span class="text-danger custom-text-danger" th:if="${submitted} and ${passwordError}" th:text="${passwordError}"></span></label>
           <input type="password" name=password class="form-control custom-form" />
         </div>
         <br />
