@@ -1,9 +1,5 @@
 package com.spring.springbootapplication.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
-
 import org.springframework.beans.factory.annotation.Autowired;  //mapper,bean取得
 import org.springframework.security.crypto.password.PasswordEncoder;  //ハッシュ化
 import org.springframework.stereotype.Controller;
@@ -15,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 
 import com.spring.springbootapplication.dto.UserAdd;
 import com.spring.springbootapplication.entity.UserInfo;
@@ -36,44 +31,50 @@ public class UserInfoController {
   // user新規登録画面
   @GetMapping(value = "signin")
   public String Add(Model model){
-    model.addAttribute("userAdd", new UserAdd());
+    if (!model.containsAttribute("userAdd")) {
+        model.addAttribute("userAdd", new UserAdd());
+    }
+    model.addAttribute("submitted", false);
     return "signin";
   }
 
   // user新規登録画面
-  @RequestMapping(value = "create", method=RequestMethod.POST)
-  // @Validated @ModelAttribute UserAdd userAdd→UserAddクラスにマッピング(探しにいく)
-  // BindingResult result→バリデーション結果を保持
-  // Model model→ビューにデータを渡す
-  public String create(@Validated @ModelAttribute UserAdd userAdd, BindingResult result, Model model) {
-      if (result.hasErrors()) {
-            //インスタンスの作成、変数xxxErrotListに入れる、xxxフィールドのエラーを都度蓄積する、xxxで発生したエラーをまとめて取得し変数に入れる、modelオブジェクトにxxxErrorというキーで渡す、ビューで表示できる
-            List<String> nameErrorList = new ArrayList<String>();
-            for (FieldError error : result.getFieldErrors("name")) {
-                nameErrorList.add(error.getDefaultMessage());
-            }
-            model.addAttribute("nameError", nameErrorList);
+  @RequestMapping(value = "create", method = RequestMethod.POST)
+public String create(@Validated @ModelAttribute UserAdd userAdd,
+                     BindingResult result, Model model) {
 
-            List<String> emailErrorList = new ArrayList<String>();
-            for (FieldError error : result.getFieldErrors("email")) {
-                emailErrorList.add(error.getDefaultMessage());
-            }
-            model.addAttribute("emailError", emailErrorList);
+    if (result.hasErrors()) {
+        model.addAttribute("nameError",     pickTop(result, "name"));
+        model.addAttribute("emailError",    pickTop(result, "email"));
+        model.addAttribute("passwordError", pickTop(result, "password"));
+        model.addAttribute("submitted", true);
+        return "signin";
+    }
 
-            List<String> passwordErrorList = new ArrayList<String>();
-            for (FieldError error : result.getFieldErrors("password")) {
-                passwordErrorList.add(error.getDefaultMessage());
-            }
-            model.addAttribute("passwordError", passwordErrorList);
+    userAdd.setPassword(passwordEncoder.encode(userAdd.getPassword()));
+    userInfoService.save(userAdd);
+    return "redirect:top";
+}
 
-            return "signin";
+private String pickTop(BindingResult r, String f) {
+    FieldError best = null; //優先度高エラーの格納
+    int rank = 99;  //優先度を数値で格納
+    for (FieldError e : r.getFieldErrors(f)) {  //各フィールドエラーチェック
+        int rnk = switch (e.getCode()) {
+            case "NotBlank" -> 0;
+            case "Pattern" -> 1;
+            case "Size" -> 2;
+            default -> 9;
+        };
+        if (rnk < rank) { //rnkよりrankが小さければ更新
+          best = e;
+          rank = rnk;
+          if (rank==0) break;  //0で抜ける
         }
-        // passwordをハッシュ化
-        userAdd.setPassword(passwordEncoder.encode(userAdd.getPassword()));
-        // 保存
-        userInfoService.save(userAdd);
-        return "redirect:top";
-  }
+    }
+    return best != null ? best.getDefaultMessage() : null;
+}
+
   @GetMapping(value = "top")
   public String top(Model model){
     UserInfo users =userInfoService.findById(1L);  //Long型のID1を探す
