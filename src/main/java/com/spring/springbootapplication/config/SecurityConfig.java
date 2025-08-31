@@ -20,7 +20,7 @@ public class SecurityConfig {
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
     // 認証許可する
-    http.authorizeHttpRequests(authz -> authz.requestMatchers("/signin","/create", "/top", "/css/**").permitAll().anyRequest().authenticated()).formLogin(form -> form.disable())
+    http.authorizeHttpRequests(authz -> authz.requestMatchers("/signin","/create", "/top", "/css/**","/actuator/health", "/actuator/health/**").permitAll().anyRequest().authenticated()).formLogin(form -> form.disable())
     //CSRF対策を一時的にオフ、開発の時のみ
     .csrf(csrf -> csrf.disable());
     return http.build();
