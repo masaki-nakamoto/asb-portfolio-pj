@@ -14,16 +14,19 @@
         th:object="${userAdd}"
         th:method="post">
         <div class="form-group custom-form-group">
-          <label class="custom-label">氏名<span class="text-danger custom-text-danger" th:if="${submitted} and ${nameError}"  th:text="${nameError}"></span></label>
+          <label class="custom-label">氏名</label>
           <input type="text" name="name" th:field="*{name}" class="form-control custom-form" />
+          <span class="text-danger custom-text-danger" th:if="${submitted} and ${nameError}"  th:text="${nameError}"></span>
         </div>
         <div class="form-group custom-form-group">
-          <label class="custom-label">メールアドレス<span class="text-danger custom-text-danger" th:if="${submitted} and ${emailError}"    th:text="${emailError}"></span></label>
+          <label class="custom-label">メールアドレス</label>
           <input type="text" name="email" th:field="*{email}" class="form-control custom-form" />
+          <span class="text-danger custom-text-danger" th:if="${submitted} and ${emailError}"    th:text="${emailError}"></span>
         </div>
         <div class="form-group custom-form-group">
-          <label class="custom-label">パスワード<span class="text-danger custom-text-danger" th:if="${submitted} and ${passwordError}" th:text="${passwordError}"></span></label>
+          <label class="custom-label">パスワード</label>
           <input type="password" name=password class="form-control custom-form" />
+          <span class="text-danger custom-text-danger" th:if="${submitted} and ${passwordError}" th:text="${passwordError}"></span>
         </div>
         <br />
         <!-- CSRF対策token発行して不正postから守る -->
