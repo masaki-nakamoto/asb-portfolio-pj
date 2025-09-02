@@ -27,10 +27,10 @@ body {
 .custom-form-group {
   margin-bottom: 25px;
   max-width: 650px;
-  margin: 0 auto;
+  margin-inline: auto;
 }
 .custom-text-danger {
-  margin-left: 20px;
+  font-size: 12px;
 }
 .custom-label {
   font-size: 12px;
@@ -48,6 +48,9 @@ body {
 }
 .custom-submit-btn {
   padding: 8px 42px;
+}
+.custom-submit-btn:hover {
+  color: #cecece;
 }
 
 footer {
