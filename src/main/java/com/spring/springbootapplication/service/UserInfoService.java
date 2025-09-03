@@ -1,6 +1,7 @@
 package com.spring.springbootapplication.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -8,6 +9,9 @@ import com.spring.springbootapplication.dao.UserInfoMapper;
 import com.spring.springbootapplication.dto.UserAdd;
 
 import com.spring.springbootapplication.entity.UserInfo;
+
+import org.springframework.security.core.Authentication;
+
 
 @Service
 public class UserInfoService {
@@ -29,6 +33,4 @@ public class UserInfoService {
   public UserInfo findById(Long id){
     return userInfoMapper.findById(id);
   }
-
-
 }

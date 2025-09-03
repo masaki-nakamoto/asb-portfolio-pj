@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+// import org.springframework.web.bind.annotation.RequestParam;
+// import org.springframework.web.bind.annotation.PathVariable;
 
 import com.spring.springbootapplication.dto.UserAdd;
-import com.spring.springbootapplication.entity.UserInfo;
+// import com.spring.springbootapplication.entity.UserInfo;
 import com.spring.springbootapplication.service.UserInfoService;
 
 
@@ -76,9 +78,6 @@ private String pickTop(BindingResult r, String f) {
 }
 
   @GetMapping(value = "top")
-  public String top(Model model){
-    UserInfo users =userInfoService.findById(1L);  //Long型のID1を探す
-    model.addAttribute("users", users);
-    return "top";
+  public void getUser(){
   }
 }
