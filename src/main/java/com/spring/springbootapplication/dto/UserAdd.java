@@ -17,7 +17,6 @@ public class UserAdd implements Serializable {
   private String name;
 
   @NotBlank(message = "メールアドレスは必ず入力してください")
-  @Size(max = 255)
   @Pattern(regexp = "^[\\w!#%&'/=~`\\*\\+\\?\\{\\}\\^\\$\\-\\|]+(\\.[\\w!#%&'/=~`\\*\\+\\?\\{\\}\\^\\$\\-\\|]+)*@[\\w!#%&'/=~`\\*\\+\\?\\{\\}\\^\\$\\-\\|]+(\\.[\\w!#%&'/=~`\\*\\+\\?\\{\\}\\^\\$\\-\\|]+)*$", message = "メールアドレスが正しい形式ではありません")
   private String email;
 
