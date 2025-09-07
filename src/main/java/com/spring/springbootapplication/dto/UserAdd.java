@@ -17,13 +17,13 @@ public class UserAdd implements Serializable {
   private String name;
 
   @NotBlank(message = "メールアドレスは必ず入力してください")
-  @Size(max = 255, message = "メールアドレスは255文字以内で入力してください")
+  @Size(max = 255)
   @Pattern(regexp = "^[\\w!#%&'/=~`\\*\\+\\?\\{\\}\\^\\$\\-\\|]+(\\.[\\w!#%&'/=~`\\*\\+\\?\\{\\}\\^\\$\\-\\|]+)*@[\\w!#%&'/=~`\\*\\+\\?\\{\\}\\^\\$\\-\\|]+(\\.[\\w!#%&'/=~`\\*\\+\\?\\{\\}\\^\\$\\-\\|]+)*$", message = "メールアドレスが正しい形式ではありません")
   private String email;
 
   @NotBlank(message = "パスワードは必ず入力してください")
-  @Size(min = 8, max = 24, message="8文字以上24文字以内で入力してください")
-  @Pattern(regexp = "^(?=.*[a-z]).*$", message = "英数字8文字以上で入力してください")
+  @Size(min = 8)
+  @Pattern(regexp = "^(?=.*\\d)(?=.*[a-z]).{8,}$", message = "英数字8文字以上で入力してください")
   private String password;
 
 
