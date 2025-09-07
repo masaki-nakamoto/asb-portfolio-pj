@@ -41,7 +41,7 @@ public class UserInfoController {
   }
 
   // user新規登録画面
-  @RequestMapping(value = "create", method = RequestMethod.POST)
+  @RequestMapping(value = "signin", method = RequestMethod.POST)
 public String create(@Validated @ModelAttribute UserAdd userAdd,
                      BindingResult result, Model model) {
 
