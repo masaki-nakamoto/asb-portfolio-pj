@@ -5,15 +5,18 @@ services:
       dockerfile: Dockerfile
     working_dir: /app
     image: masakinakamoto/asb-app
+    platform: linux/amd64 #追加
     ports:
-      - '80:8080' #追加
       - 8080:8080
       - 5050:5050
     tty: true
-    volumes:
-      - ./:/app
+    # volumes:
+    #   - ./:/app
+    # ヘルスチェックがヘルスになってDB接続
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+      # - db
 
   db:
     image: postgres:13.1
@@ -24,3 +27,10 @@ services:
       POSTGRES_DB: 'dev'
     ports:
       - '5432:5432'
+    # 接続チェック、タイミングをズラす？
+    healthcheck:
+      test: ['CMD', 'sh', '-c', 'pg_isready -U postgres']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
