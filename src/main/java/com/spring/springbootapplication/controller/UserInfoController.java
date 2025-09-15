@@ -1,6 +1,8 @@
 package com.spring.springbootapplication.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;  //mapper,bean取得
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;  //ハッシュ化
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;  //viewへ渡す
@@ -11,11 +13,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-// import org.springframework.web.bind.annotation.RequestParam;
-// import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.springbootapplication.dto.UserAdd;
-// import com.spring.springbootapplication.entity.UserInfo;
 import com.spring.springbootapplication.service.UserInfoService;
 
 
@@ -76,8 +77,25 @@ private String pickTop(BindingResult r, String f) {
     }
     return best != null ? best.getDefaultMessage() : null;
 }
-
+  // top画面
   @GetMapping(value = "top")
   public void getUser(){
+  }
+
+
+  // login画面
+  @GetMapping(value = "login")
+  public String login(
+    @RequestParam(value = "error", required = false) String error,RedirectAttributes redirectAttributes, Model model
+    ){
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+      if(auth != null && auth.isAuthenticated() && !"anonymousUser".equals(auth.getPrincipal())){
+        System.out.println(auth.getPrincipal());
+      return "redirect:/top";
+    }
+    if (error != null){
+      model.addAttribute("error","メールアドレス、もしくはパスワードが間違ってます");
+    }
+    return "login";
   }
 }

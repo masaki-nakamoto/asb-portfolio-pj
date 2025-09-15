@@ -12,7 +12,7 @@
       </insert>
 
        <!-- user取得 -->
-       <select id="findById" resultType="com.spring.springbootapplication.entity.UserInfo">
-       SELECT * FROM users WHERE id = #{id}
+       <select id="findByEmail" resultType="com.spring.springbootapplication.entity.UserInfo">
+       SELECT id, email, password, name, updated_at AS updateDate, created_at AS createDate FROM users WHERE email = #{email}
        </select>
    </mapper>
