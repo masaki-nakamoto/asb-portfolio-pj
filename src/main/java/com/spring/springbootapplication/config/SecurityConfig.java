@@ -1,5 +1,6 @@
 package com.spring.springbootapplication.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;  //部品化
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;  //security
@@ -11,6 +12,13 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+  // パスワード比較デバック用
+  private final CustomAuthenticationProvider customAuthenticationProvider;
+  @Autowired
+  public SecurityConfig(CustomAuthenticationProvider customAuthenticationProvider) {
+    this.customAuthenticationProvider = customAuthenticationProvider;
+  }
+
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
     // 認証許可する
@@ -19,7 +27,8 @@ public class SecurityConfig {
       .requestMatchers("/actuator/health", "/actuator/health/**").permitAll()
       .requestMatchers("/top").permitAll()
       .anyRequest().authenticated()
-    )
+      )
+
     // loginパスの認証
     .formLogin(login -> login
       .loginPage("/login")
@@ -31,7 +40,8 @@ public class SecurityConfig {
       .permitAll()
     )
     //CSRF対策を一時的にオフ、開発の時のみ
-    .csrf(csrf -> csrf.disable());
+    .csrf(csrf -> csrf.disable())
+    .authenticationProvider(customAuthenticationProvider); // パスワード比較デバック用
     return http.build();
 
   }

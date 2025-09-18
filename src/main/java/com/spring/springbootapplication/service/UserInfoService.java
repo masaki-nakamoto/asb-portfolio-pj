@@ -20,7 +20,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 public class UserInfoService implements UserDetailsService{
   // user情報 Mapper
   @Autowired
-  private UserInfoMapper userInfoMapper;
+  private UserInfoMapper userInfoMapper;  //repositoryにあたる
   // password ServiceConfig
   @Autowired
   private PasswordEncoder passwordEncoder;
@@ -32,10 +32,7 @@ public class UserInfoService implements UserDetailsService{
     userInfoMapper.save(userAdd);
   }
 
-  // user情報取得
-  // public UserInfo findById(Long id){
-  //   return userInfoMapper.findById(id);
-  // }
+
 
   // userログイン
   @Autowired
@@ -46,11 +43,21 @@ public class UserInfoService implements UserDetailsService{
 
   @Override
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException{
+
+    System.out.println("検索対象ユーザー: " + email);
+
     UserInfo userInfo = userInfoMapper.findByEmail(email)
     .orElseThrow(() -> new UsernameNotFoundException("don't find : " + email));
 
-    String dbHash = userInfo.getPassword();
-    System.out.println("DBハッシュ値: " + dbHash); //ハッシュ化は確認できた
+    // ユーザー情報の取得可否
+    if (userInfo != null){
+      String dbEmail = userInfo.getEmail();
+      System.out.println("DBEmail値: " + dbEmail); //DBからのEmail
+      String dbHash = userInfo.getPassword();
+      System.out.println("DBハッシュ値: " + dbHash); //ハッシュ化は確認できた
+    } else {
+      System.out.println("--- Debug: ユーザーが見つかりませんでした ---");
+    }
 
     return User.builder()
     .username(userInfo.getEmail())

@@ -84,14 +84,14 @@ private String pickTop(BindingResult r, String f) {
 
 
   // login画面
-  @GetMapping(value = "login")
-  public String login(
+  @GetMapping(value = "/login")
+  public String moveToTop(
     @RequestParam(value = "error", required = false) String error,RedirectAttributes redirectAttributes, Model model
     ){
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    System.out.println(SecurityContextHolder.getContext().getAuthentication());
       if(auth != null && auth.isAuthenticated() && !"anonymousUser".equals(auth.getPrincipal())){
-        System.out.println(auth.getPrincipal());
-      return "redirect:/top";
+      return "redirect:top";
     }
     if (error != null){
       model.addAttribute("error","メールアドレス、もしくはパスワードが間違ってます");
