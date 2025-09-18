@@ -64,11 +64,17 @@ body {
   padding-left: 40px;
   padding-right: 40px;
 }
+.custom-login-btn:hover {
+  color: #cecece;
+}
 
 .custom-signin-btn {
   margin-top: 40px;
   padding-left: 40px;
   padding-right: 40px;
+}
+.custom-signin-btn:hover {
+  color: #cecece;
 }
 
 footer {
