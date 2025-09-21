@@ -4,65 +4,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.spring.springbootapplication.dao.UserInfoMapper;
 import com.spring.springbootapplication.dto.UserAdd;
-import com.spring.springbootapplication.entity.UserInfo;
-
-// 追加↓
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-
+import com.spring.springbootapplication.repository.UserRepository;
 
 
 @Service
-public class UserInfoService implements UserDetailsService{
+public class UserInfoService {
+  // フィールド
   // user情報 Mapper
   @Autowired
-  private UserInfoMapper userInfoMapper;  //repositoryにあたる
+  private UserRepository userRepository;
   // password ServiceConfig
   @Autowired
   private PasswordEncoder passwordEncoder;
-
+  public UserInfoService(UserRepository userRepository){
+    this.userRepository = userRepository;
+  }
 
   // user登録情報
-  public void save(UserAdd userAdd){
+  public void create(UserAdd userAdd){
     userAdd.setPassword(passwordEncoder.encode(userAdd.getPassword()));
-    userInfoMapper.save(userAdd);
-  }
-
-
-
-  // userログイン
-  @Autowired
-  public UserInfoService(UserInfoMapper userInfoMapper, PasswordEncoder passwordEncoder){
-    this.userInfoMapper = userInfoMapper;
-    this.passwordEncoder = passwordEncoder;
-  }
-
-  @Override
-  public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException{
-
-    System.out.println("検索対象ユーザー: " + email);
-
-    UserInfo userInfo = userInfoMapper.findByEmail(email)
-    .orElseThrow(() -> new UsernameNotFoundException("don't find : " + email));
-
-    // ユーザー情報の取得可否
-    if (userInfo != null){
-      String dbEmail = userInfo.getEmail();
-      System.out.println("DBEmail値: " + dbEmail); //DBからのEmail
-      String dbHash = userInfo.getPassword();
-      System.out.println("DBハッシュ値: " + dbHash); //ハッシュ化は確認できた
-    } else {
-      System.out.println("--- Debug: ユーザーが見つかりませんでした ---");
-    }
-
-    return User.builder()
-    .username(userInfo.getEmail())
-    .password(userInfo.getPassword())
-    .roles("USER")
-    .build();
+    System.out.println("UserInfoSevice");  //debug
+    System.out.println(userAdd);  //dubug
+    userRepository.save(userAdd);
   }
 }
