@@ -1,11 +1,8 @@
 package com.spring.springbootapplication.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;  //部品化
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;  //security
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;  //ハッシュ化
-import org.springframework.security.crypto.password.PasswordEncoder;  //ハッシュ化
 import org.springframework.security.web.SecurityFilterChain;  //security
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;  //security
 
@@ -14,7 +11,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 public class SecurityConfig {
   // パスワード比較デバック用
   private final CustomAuthenticationProvider customAuthenticationProvider;
-  @Autowired
+
   public SecurityConfig(CustomAuthenticationProvider customAuthenticationProvider) {
     this.customAuthenticationProvider = customAuthenticationProvider;
   }
@@ -44,10 +41,5 @@ public class SecurityConfig {
     .authenticationProvider(customAuthenticationProvider); // パスワード比較デバック用
     return http.build();
 
-  }
-
-  @Bean  //部品化して他でも渡せる
-  public PasswordEncoder passwordEncoder(){
-    return new BCryptPasswordEncoder();
   }
 }
