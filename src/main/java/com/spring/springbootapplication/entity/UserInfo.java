@@ -17,7 +17,6 @@ import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name="users")
-
 // user情報
 @Data
 public class UserInfo implements Serializable{
