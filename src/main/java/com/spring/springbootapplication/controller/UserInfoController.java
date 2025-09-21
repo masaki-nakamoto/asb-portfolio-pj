@@ -3,7 +3,6 @@ package com.spring.springbootapplication.controller;
 import org.springframework.beans.factory.annotation.Autowired;  //mapper,bean取得
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;  //ハッシュ化
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;  //viewへ渡す
 import org.springframework.validation.BindingResult;  //validation
@@ -28,8 +27,8 @@ public class UserInfoController {
   @Autowired
   private UserInfoService userInfoService;
   // password ServiceConfig
-  @Autowired
-  private PasswordEncoder passwordEncoder;
+  // @Autowired
+  // private PasswordEncoder passwordEncoder;
 
   // user新規登録画面
   @GetMapping(value = "signin")
@@ -43,7 +42,7 @@ public class UserInfoController {
 
   // user新規登録画面
   @RequestMapping(value = "signin", method = RequestMethod.POST)
-public String create(@Validated @ModelAttribute UserAdd userAdd,
+public String registUser(@Validated @ModelAttribute UserAdd userAdd,
                      BindingResult result, Model model) {
 
     if (result.hasErrors()) {
@@ -52,10 +51,15 @@ public String create(@Validated @ModelAttribute UserAdd userAdd,
         model.addAttribute("passwordError", pickTop(result, "password"));
         model.addAttribute("submitted", true);
         return "signin";
+    } else {
+      userInfoService.create(userAdd);
     }
 
-    userAdd.setPassword(passwordEncoder.encode(userAdd.getPassword()));
-    userInfoService.save(userAdd);
+    // ここで二重にエンコード発生
+    // userAdd.setPassword(passwordEncoder.encode(userAdd.getPassword()));
+    // System.out.println("UserInfoCoontorller");  //debug
+    // System.out.println(userAdd);  //debug
+    // userInfoService.save(userAdd);
     return "redirect:top";
 }
 
@@ -89,7 +93,6 @@ private String pickTop(BindingResult r, String f) {
     @RequestParam(value = "error", required = false) String error,RedirectAttributes redirectAttributes, Model model
     ){
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    System.out.println(SecurityContextHolder.getContext().getAuthentication());
       if(auth != null && auth.isAuthenticated() && !"anonymousUser".equals(auth.getPrincipal())){
       return "redirect:top";
     }
