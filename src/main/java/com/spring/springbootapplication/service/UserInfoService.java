@@ -17,13 +17,18 @@ public class UserInfoService {
   // password ServiceConfig
   @Autowired
   private PasswordEncoder passwordEncoder;
+
   public UserInfoService(UserRepository userRepository){
     this.userRepository = userRepository;
   }
 
   // user登録情報
-  public void create(UserAdd userAdd){
+  public void create(UserAdd userAdd, String email){
     userAdd.setPassword(passwordEncoder.encode(userAdd.getPassword()));
+
+if (!userRepository.findByEmail(email).isEmpty()){
+      throw new IllegalArgumentException("このEmailは既に使用されてます。");
+    }
     System.out.println("UserInfoSevice");  //debug
     System.out.println(userAdd);  //dubug
     userRepository.save(userAdd);

@@ -33,6 +33,7 @@ public class UserInfoController {
   // user新規登録画面
   @GetMapping(value = "signin")
   public String Add(Model model){
+    model.addAttribute("showLoginButton", true);
     if (!model.containsAttribute("userAdd")) {
         model.addAttribute("userAdd", new UserAdd());
     }
@@ -52,8 +53,17 @@ public String registUser(@Validated @ModelAttribute UserAdd userAdd,
         model.addAttribute("submitted", true);
         return "signin";
     } else {
-      userInfoService.create(userAdd);
+      try {
+            userInfoService.create(userAdd, userAdd.getEmail());
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("emailError", null);  //上のバリデーションと区別
+            model.addAttribute("uniqueError", e.getMessage());
+            model.addAttribute("submitted", true);
+            return "signin";
+        }
     }
+    //   userInfoService.create(userAdd, userAdd.getEmail());
+    // }
 
     // ここで二重にエンコード発生
     // userAdd.setPassword(passwordEncoder.encode(userAdd.getPassword()));
@@ -83,7 +93,8 @@ private String pickTop(BindingResult r, String f) {
 }
   // top画面
   @GetMapping(value = "top")
-  public void getUser(){
+  public void getUser(Model model){
+    model.addAttribute("showLogoutButton", true);
   }
 
 
