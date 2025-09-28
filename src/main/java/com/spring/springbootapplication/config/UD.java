@@ -26,6 +26,10 @@ public class UD implements UserDetails {
     return user.getEmail();
   }
 
+  public String getName(){
+    return user.getName();
+  }
+
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities(){
     return authorities;

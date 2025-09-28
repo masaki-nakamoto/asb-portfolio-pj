@@ -2,6 +2,8 @@ package com.spring.springbootapplication.dto;
 
 import java.io.Serializable;
 
+import com.spring.springbootapplication.entity.UserInfo;
+
 import lombok.Data;
 
 import jakarta.validation.constraints.NotBlank;
@@ -33,5 +35,15 @@ public class UserAdd implements Serializable {
   public void setEmail(String email) { this.email = email; }
 
   public String getPassword() { return password; }
-  public void setPassword(String password) { this.password = password; }
+  public void setPassword(String password) {
+  this.password = password; }
+
+public UserInfo toEntity() {
+    UserInfo userInfo = new UserInfo();
+    userInfo.setName(this.name);
+    userInfo.setEmail(this.email);
+    userInfo.setPassword(this.password);
+    return userInfo;
+}
+
 }

@@ -45,4 +45,9 @@ public class UserInfo implements Serializable{
 
   private Date deleteDate;
 
+@NotBlank
+@Column(name = "ROLE")
+private String role = "USER";
+
+
 }

@@ -4,7 +4,7 @@
    <mapper namespace="com.spring.springbootapplication.repository.UserRepository">
 
       <!-- user新規登録 -->
-      <insert id="save">
+      <insert id="insert">
         INSERT INTO users
           (name, email, password, updated_at, created_at)
         VALUES

@@ -1,7 +1,15 @@
 <header>
-  <nav class="navbar navbar-expand-sm mb-3 custom-navbar custom-color">
-    <a class="navbar-brand custom-navbar-brand" href="#">My Portfolio</a>
-    <div class="collapse navbar-collapse justify-content-end" id="navbarNav4">
+  <nav class="custom-navbar custom-color">
+    <a
+      class="custom-navbar-brand"
+      href="#"
+      th:classappend="${loginPage} ? 'text-l' : 'text-c'"
+      >My Portfolio</a
+    >
+    <div
+      th:classappend="${loginPage} ? 'null' : 'custom-loginout-btn'"
+      id="navbarNav4"
+    >
       <!-- 新規登録画面でログインボタンを表示 -->
       <a
         class="nav-link custom-nav-link"
