@@ -12,17 +12,16 @@ header {
 .custom-navbar {
   width: 100%;
   height: 120px;
-  display: flex;
-  align-items: center;
-}
-.text-c {
-  text-align: center;
-  width: 85%;
+  padding: 0 40px;
   display: flex;
   align-items: center;
 }
 .text-l {
-  text-align: left;
+  width: 90%;
+  display: flex;
+  align-items: center;
+}
+.text-c {
   width: 100%;
   display: flex;
   align-items: center;
@@ -31,7 +30,6 @@ header {
 
 .custom-navbar-brand {
   color: white;
-  margin: 0 20px;
   text-decoration: none;
   font-size: 36px;
 }
@@ -40,16 +38,16 @@ header {
 }
 .custom-loginout-btn {
   height: 53px;
-  width: 153px;
+  width: 152px;
   display: flex;
   align-items: center;
 }
 .custom-nav-link {
   padding: 16px 40px;
+  border-radius: 4px;
+  font-size: 18px;
   background-color: white;
   color: black;
-  border-radius: 2px;
-  font-size: 12px;
   text-decoration: none;
 }
 /* 好きくない */
@@ -82,37 +80,36 @@ header {
   color: #fff;
 }
 .custom-submit-btn {
-  padding: 8px 42px;
+  height: 53px;
+  width: 238px;
+  padding: 16px 80px;
+  font-size: 18px;
 }
 .custom-submit-btn:hover {
   color: #cecece;
 }
 
-.custom-login-btn {
-  padding-left: 40px;
-  padding-right: 40px;
+.custom-login-signin-btn {
+  height: 53px;
+  width: 268px;
+  padding: 16px 80px;
+  font-size: 18px;
+  border: none;
 }
-.custom-login-btn:hover {
+.custom-login-signin-btn:hover {
   color: #cecece;
+}
+.signin-m {
+  margin-top: 40px;
 }
 
-.custom-signin-btn {
-  margin-top: 40px;
-  padding-left: 40px;
-  padding-right: 40px;
-}
-.custom-signin-btn:hover {
-  color: #cecece;
-}
 .custom-copy {
   padding: 8px 0;
   margin: 0;
 }
-
 .custom-footer {
   height: 100%;
 }
-
 footer {
   position: absolute;
   bottom: 0;

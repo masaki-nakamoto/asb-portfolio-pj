@@ -3,7 +3,7 @@
     <a
       class="custom-navbar-brand"
       href="#"
-      th:classappend="${loginPage} ? 'text-l' : 'text-c'"
+      th:classappend="${loginPage} ? 'text-c' : 'text-l'"
       >My Portfolio</a
     >
     <div
@@ -11,6 +11,15 @@
       id="navbarNav4"
     >
       <!-- 新規登録画面でログインボタンを表示 -->
+      <!-- <form th:action="@{/login}" method="get">
+        <input
+          class="nav-link custom-nav-link"
+          th:if="${showLoginButton}"
+          type="submit"
+          name="login"
+          value="ログイン"
+        />
+      </form> -->
       <a
         class="nav-link custom-nav-link"
         th:if="${showLoginButton}"
@@ -18,12 +27,20 @@
         >ログイン</a
       >
       <!-- ログイン時はログアウトボタンを表示 -->
-      <a
+      <!-- <a
         class="nav-link custom-nav-link"
         th:if="${showLogoutButton}"
         th:href="@{/logout}"
         >ログアウト</a
-      >
+      > -->
+      <form th:if="${showLogoutButton}" th:action="@{/logout}" method="post">
+        <input
+          class="nav-link custom-nav-link"
+          type="submit"
+          name="logout"
+          value="ログアウト"
+        />
+      </form>
     </div>
   </nav>
 </header>
