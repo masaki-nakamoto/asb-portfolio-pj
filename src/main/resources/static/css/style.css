@@ -49,6 +49,7 @@ header {
   background-color: white;
   color: black;
   text-decoration: none;
+  line-height: 1.2;
 }
 /* 好きくない */
 .custom-nav-link:hover {
@@ -84,6 +85,7 @@ header {
   width: 238px;
   padding: 16px 80px;
   font-size: 18px;
+  line-height: 1.2;
 }
 .custom-submit-btn:hover {
   color: #cecece;
@@ -95,6 +97,7 @@ header {
   padding: 16px 80px;
   font-size: 18px;
   border: none;
+  line-height: 1.2;
 }
 .custom-login-signin-btn:hover {
   color: #cecece;
