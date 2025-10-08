@@ -1,5 +1,8 @@
 <footer>
   <div class="text-center custom-color">
-    <p>Portfolio Site</p>
+    <p class="custom-copy">
+      <span th:if="${showLoginUser}" th:text="${username}"></span>
+      <span th:if="${showLoginUser != true}">portfolio site</span>
+    </p>
   </div>
 </footer>
