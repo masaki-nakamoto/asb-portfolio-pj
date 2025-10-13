@@ -24,7 +24,6 @@ public class UserInfoService {
   }
 
   // user登録情報
-  // public void create(UserAdd userAdd, String email){
   public UserInfo create(UserAdd userAdd, String email){
     userAdd.setPassword(passwordEncoder.encode(userAdd.getPassword()));
 
@@ -37,13 +36,5 @@ if (!userRepository.findByEmail(email).isEmpty()){
     userInfo.setPassword(userAdd.getPassword());
     userRepository.insert(userInfo);
     return userRepository.findByEmail(email).orElse(userInfo);
-
-    // UserInfo userInfo = userAdd.toEntity();
-    // userRepository.insert(userInfo);
-    // return userInfo;
-
-    // System.out.println("UserInfoSevice");  //debug
-    // System.out.println(userAdd);  //dubug
-    // userRepository.save(userAdd);
   }
 }

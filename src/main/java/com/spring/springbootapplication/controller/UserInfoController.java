@@ -1,8 +1,12 @@
 package com.spring.springbootapplication.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;  //mapper,bean取得
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;  //viewへ渡す
 import org.springframework.validation.BindingResult;  //validation
@@ -12,13 +16,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.springbootapplication.config.CUD;
 import com.spring.springbootapplication.dto.UserAdd;
 import com.spring.springbootapplication.entity.UserInfo;
 import com.spring.springbootapplication.service.UserInfoService;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 
 
@@ -28,6 +34,8 @@ public class UserInfoController {
   // user情報
   @Autowired
   private UserInfoService userInfoService;
+  @Autowired
+  private UserDetailsService userDetailsService;
 
   // user新規登録画面
   @GetMapping(value = "signin")
@@ -44,16 +52,25 @@ public class UserInfoController {
   // user新規登録画面
   @RequestMapping(value = "signin", method = RequestMethod.POST)
 public String registUser(@Validated @ModelAttribute UserAdd userAdd,
-                     BindingResult result, Model model,RedirectAttributes redirectAttributes) {
+                     BindingResult result, Model model,RedirectAttributes redirectAttributes, HttpServletRequest request, HttpServletResponse response) {
     if (result.hasErrors()) {
         model.addAttribute("nameError",     pickTop(result, "name"));
         model.addAttribute("emailError",    pickTop(result, "email"));
         model.addAttribute("passwordError", pickTop(result, "password"));
         model.addAttribute("submitted", true);
+        model.addAttribute("showLoginButton", true);
         return "signin";
     } else {
       try {
             UserInfo savedUser = userInfoService.create(userAdd, userAdd.getEmail());
+            // 登録後ログイン
+            UserDetails userDetails = userDetailsService.loadUserByUsername(savedUser.getEmail());
+            // トークンの発行と認証のセット
+            Authentication auth = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(auth);
+            // セッションに認証セットの保存
+            HttpSessionSecurityContextRepository repo = new HttpSessionSecurityContextRepository();
+            repo.saveContext(SecurityContextHolder.getContext(), request, response);
             String name = savedUser.getName();
             // System.out.println("RequestMappingのtryの中");
             // System.out.println(name);
@@ -63,6 +80,7 @@ public String registUser(@Validated @ModelAttribute UserAdd userAdd,
             model.addAttribute("emailError", null);  //上のバリデーションと区別
             model.addAttribute("uniqueError", e.getMessage());
             model.addAttribute("submitted", true);
+            model.addAttribute("showLoginButton", true);
             return "signin";
         }
     }
@@ -92,7 +110,6 @@ private String pickTop(BindingResult r, String f) {
   public String top(Model model, @ModelAttribute(value = "username") String flashUsername){
     model.addAttribute("showLogoutButton", true);
 
-    // System.out.println(auth);
     String name = flashUsername != null ? flashUsername : "";
     if (name.isEmpty()) {
       Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -104,22 +121,5 @@ private String pickTop(BindingResult r, String f) {
     model.addAttribute("showLoginUser", true);
     model.addAttribute("username", name);
     return "top";
-  }
-
-
-  // login画面
-  @GetMapping(value = "/login")
-  public String login(
-    @RequestParam(value = "error", required = false) String error,RedirectAttributes redirectAttributes, Model model
-    ){
-      model.addAttribute("loginPage", true);
-    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-      if(auth != null && auth.isAuthenticated() && !"anonymousUser".equals(auth.getPrincipal())){
-      return "redirect:top";
-    }
-    if (error != null){
-      model.addAttribute("error","メールアドレス、もしくはパスワードが間違ってます");
-    }
-    return "login";
   }
 }

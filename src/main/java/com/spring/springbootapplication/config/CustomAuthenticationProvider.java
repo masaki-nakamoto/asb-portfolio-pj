@@ -38,7 +38,7 @@ public Authentication authenticate(Authentication authentication) throws Authent
   if(!matches) {
     throw new BadCredentialsException("bad");
   }
-  return new UsernamePasswordAuthenticationToken(userDetails, userDetails.getAuthorities());
+  return new UsernamePasswordAuthenticationToken(userDetails,presentedPassword,userDetails.getAuthorities());
 }
 @Override
     public boolean supports(Class<?> authentication) {

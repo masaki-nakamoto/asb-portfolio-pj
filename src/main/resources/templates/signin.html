@@ -15,7 +15,6 @@
         th:method="post">
         <div class="form-group custom-form-group">
           <label class="custom-label">氏名</label>
-          <!-- <input type="text" name="name" th:field="*{name}" class="form-control custom-form" /> -->
           <input type="text" name="name" th:field="*{name}" class="custom-form" />
           <span class="text-danger custom-text-danger" th:if="${submitted} and ${nameError}"  th:text="${nameError}"></span>
         </div>
