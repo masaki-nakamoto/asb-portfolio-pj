@@ -50,7 +50,10 @@ header {
   background-color: white;
   color: black;
   text-decoration: none;
-  line-height: 1.2;
+  line-height: 1;
+  height: 53px;
+  width: 170px;
+  border: none;
 }
 /* 好きくない */
 .custom-nav-link:hover {
