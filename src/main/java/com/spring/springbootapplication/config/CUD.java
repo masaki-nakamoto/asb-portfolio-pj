@@ -31,10 +31,10 @@ public class CUD implements UserDetails {
         return user.getPassword();
     }
     @Override
-public Collection<? extends GrantedAuthority> getAuthorities() {
-    // 強制的に"ROLE_USER"を返す
-    return Arrays.asList(new SimpleGrantedAuthority("USER"));
-}
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+    // "ROLE_USER"を返す
+    return Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
+    }
 
     @Override
     public boolean isAccountNonExpired() { return true; }

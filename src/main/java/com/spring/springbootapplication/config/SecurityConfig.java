@@ -22,7 +22,7 @@ public class SecurityConfig {
     http.authorizeHttpRequests(authz -> authz
       .requestMatchers("/signin", "/login", "/css/**").permitAll()
       .requestMatchers("/actuator/health", "/actuator/health/**").permitAll()
-      .requestMatchers("/top").permitAll()
+      .requestMatchers("/top").authenticated()
       .anyRequest().authenticated()
       )
 
@@ -37,8 +37,14 @@ public class SecurityConfig {
       .permitAll()
     )
     //CSRF対策を一時的にオフ、開発の時のみ
-    .csrf(csrf -> csrf.disable())
-    .authenticationProvider(customAuthenticationProvider); // パスワード比較デバック用
+    .authenticationProvider(customAuthenticationProvider) // パスワード比較デバック用
+    .logout(logout -> logout
+    .logoutSuccessUrl("/login?logout")
+    .invalidateHttpSession(true)
+    .deleteCookies("JSESSIONID")
+    .permitAll()
+    )
+    .csrf(csrf -> csrf.disable());
     return http.build();
 
   }
