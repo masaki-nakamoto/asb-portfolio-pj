@@ -6,9 +6,38 @@
   <body>
     <header th:replace="~{common/header}"></header>
     <div class="container">
-      <h1>トップページです</h1>
+      <section class="profile">
+        <div class="avatar">
+          <img class="avatar-img" src="" alt="" />
+          <div class="profile-username">
+            <span th:if="${showLoginUser}" th:text="${username}"></span>
+          </div>
+        </div>
+        <div class="profile-wrap">
+          <h1 class="profile-title">自己紹介</h1>
+          <p class="profile-content">
+            自分の自己紹介文章が入ります。自分の自己紹介文章が入ります。自分の自己紹介文章が入ります。自分の自己紹介文章が入ります。自分の自己紹介文章が入ります。
+          </p>
+          <button class="btn profile-edit-link custom-color">
+            <a href="#">自己紹介を編集する</a>
+          </button>
+        </div>
+      </section>
+      <section class="chart">
+        <h1 class="chart-title">学習チャート</h1>
+        <button class="btn chart-edit-link custom-color">
+          <a href="#">編集する</a>
+        </button>
+        <div class="chart-wrap">
+          <div class="bar-js">Chart.js Bar Chart</div>
+          <div class="chart-category">
+            <span class="bar b-bar"></span><span class="bar-name">バックエンド</span>
+            <span class="bar f-bar"></span><span class="bar-name">フロントエンド</span>
+            <span class="bar i-bar"></span><span class="bar-name">インフラ</span>
+        </div>
+        <div><h1>chart zone</h1></div>
+      </section>
     </div>
-    <!-- <a href="/login">ログイン</a> -->
     <footer th:replace="~{common/footer}"></footer>
   </body>
 </html>

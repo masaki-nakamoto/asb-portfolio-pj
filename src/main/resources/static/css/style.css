@@ -3,10 +3,22 @@ html {
   min-height: 100%;
 }
 body {
+  width: 1470px;
   margin-bottom: 60px;
   height: 1024px;
 }
 
+.container {
+  /* width: auto;
+  max-width: 680px; */
+  /* margin: 0 auto; */
+  /* width: 1100px; */
+  padding: 0;
+  margin: 0 auto;
+  width: auto;
+}
+
+/* header */
 header {
   height: 120px;
 }
@@ -59,6 +71,8 @@ header {
 .custom-nav-link:hover {
   color: #000000bf;
 }
+
+/* ログイン-新規登録 */
 .custom-caption {
   margin: 80px 0;
   font-size: 36px;
@@ -121,7 +135,113 @@ header {
 .signin-m {
   margin: 0;
 }
+/* top */
+.profile {
+  display: flex;
+  margin: 80px 175px 120px 175px;
+  width: 960px;
+}
+.avatar {
+  text-align: center;
+  height: 360px;
+  width: 360px;
+}
+.avatar-img {
+  width: 360px;
+  height: 360px;
+  background-color: gray;
+  border-radius: 50%;
+}
+.profile-username {
+  color: rgba(0, 0, 0, 0.75);
+  margin-top: 10px;
+  width: 194px;
+  height: 57px;
+  line-height: 3.5;
+  position: relative;
+  left: 85px;
+}
+.profile-wrap {
+  margin: 52px 0 52px 80px;
+  width: 520px;
+}
+.profile-title {
+  color: rgba(0, 0, 0, 0.75);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.5);
+  width: 240px;
+  height: 42px;
+  padding-bottom: 16px;
+  margin-bottom: 32px;
+  font-size: 36px;
+  box-sizing: unset;
+}
+.profile-content {
+  margin-bottom: 32px;
+}
+.profile-edit-link {
+  height: 53px;
+  width: 242px;
+  padding: 16px 40px;
+  font-size: 18px;
+  border-radius: 4px;
+  color: #ffffff;
+  border: none;
+  text-decoration: none;
+  line-height: 1;
+}
+.chart {
+  text-align: center;
+}
+.chart-title {
+  color: rgba(0, 0, 0, 0.75);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.5);
+  width: 400px;
+  height: 42px;
+  padding-bottom: 16px;
+  margin: 0 auto;
+  box-sizing: unset;
+}
+.chart-edit-link {
+  height: 53px;
+  width: 152px;
+  padding: 16px 40px;
+  font-size: 18px;
+  border-radius: 4px;
+  color: #ffffff;
+  border: none;
+  text-decoration: none;
+  margin: 40px 0 46px 0;
+  line-height: 1;
+}
 
+.chart-wrap {
+  margin: 0 auto 81.5px auto;
+  width: 1081px;
+  height: 532.5px;
+  color: #000000bf;
+}
+.bar-js {
+  margin: 25px;
+}
+.bar {
+  display: inline-block;
+  width: 50px;
+  height: 13px;
+  margin-right: 5px;
+}
+.b-bar {
+  background: rgb(255, 170, 170);
+}
+.f-bar {
+  background: rgb(255, 205, 170);
+}
+.i-bar {
+  background: rgb(255, 245, 170);
+}
+.bar-name {
+  margin-right: 15px;
+}
+/* footer */
 .custom-copy {
   padding: 9.5px 0;
   margin: 0;
@@ -136,8 +256,11 @@ footer {
   height: 40px;
   margin: 0;
 }
-.container {
-  width: auto;
-  max-width: 680px;
-  padding: 0 15px;
+/* reset */
+a {
+  color: #ffffff;
+  text-decoration: none;
+}
+a:hover {
+  color: #cecece;
 }
