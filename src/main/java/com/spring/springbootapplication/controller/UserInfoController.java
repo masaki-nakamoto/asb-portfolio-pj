@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.spring.springbootapplication.config.CUD;
 import com.spring.springbootapplication.dto.UserAdd;
 import com.spring.springbootapplication.entity.UserInfo;
 import com.spring.springbootapplication.service.UserInfoService;
@@ -105,21 +104,4 @@ private String pickTop(BindingResult r, String f) {
     }
     return best != null ? best.getDefaultMessage() : null;
 }
-  // top画面
-  @GetMapping(value = "top")
-  public String top(Model model, @ModelAttribute(value = "username") String flashUsername){
-    model.addAttribute("showLogoutButton", true);
-
-    String name = flashUsername != null ? flashUsername : "";
-    if (name.isEmpty()) {
-      Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-      if (auth != null && auth.getPrincipal() instanceof CUD) {
-        name = ((CUD) auth.getPrincipal()).getName();
-      }
-    }
-    model.addAttribute("loginPage", false);
-    model.addAttribute("showLoginUser", true);
-    model.addAttribute("username", name);
-    return "top";
-  }
 }
